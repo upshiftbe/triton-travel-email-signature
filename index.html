@@ -1,3 +1,16 @@
+<div style="margin-bottom: 200px">
+  <h1>Configuratie</h1>
+  <h2>Naam</h2>
+  <input type="text" id="input-naam" />
+  <h2>Functie</h2>
+  <input type="text" id="functie" />
+  <h2>E-mail</h2>
+  <input type="text" id="e-mail" />
+  <h2>GSM</h2>
+  <input type="text" id="gsm" />
+  <button onclick="myFunction()">vul in</button>
+</div>
+
 <table
   cellpadding="0"
   cellspacing="0"
@@ -34,8 +47,7 @@
                     color: #181127;
                   "
                 >
-                  <span>Danny</span><span>&nbsp;</span
-                  ><span>Vanderghinste</span>
+                  <span id="footer-naam"></span>
                 </h3>
                 <p
                   color="#000000"
@@ -334,7 +346,7 @@
                     <tr style="text-align: right">
                       <td>
                         <a
-                          href="https://www.facebook.com/UGTritonTravel"
+                          href="https://www.facebook.com/tritontravel.be"
                           color="#6A78D1"
                           class="sc-hzDkRC kpsoyz"
                           style="
@@ -363,7 +375,7 @@
                       <td width="5"><div></div></td>
                       <td>
                         <a
-                          href="https://www.linkedin.com/company/uniglobe-triton-travel-nv/"
+                          href="https://www.linkedin.com/company/tritontravel"
                           color="#6A78D1"
                           class="sc-hzDkRC kpsoyz"
                           style="
@@ -468,3 +480,10 @@
     </tr>
   </tbody>
 </table>
+
+<script>
+  function myFunction() {
+    var x = document.getElementById("input-naam").value;
+    document.getElementById("footer-naam").innerHTML = x;
+  }
+</script>
