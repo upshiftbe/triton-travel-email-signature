@@ -32,6 +32,22 @@
     onkeyup="updateFooter()"
     onchange="updateFooter()"
   />
+
+  <h2>Locatie 1</h2>
+  <input
+    type="text"
+    id="input-locatie-1"
+    onkeyup="updateFooter()"
+    onchange="updateFooter()"
+  />
+
+  <h2>Locatie 2</h2>
+  <input
+    type="text"
+    id="input-locatie-2"
+    onkeyup="updateFooter()"
+    onchange="updateFooter()"
+  />
 </div>
 
 <script>
@@ -49,13 +65,25 @@
     var email = document.getElementById("input-email").value;
     document.getElementById("footer-email").innerHTML = email;
     document.getElementById("link-email").href = "mailto: " + email;
+
+    var locatie1 = document.getElementById("input-locatie-1").value;
+    document.getElementById("footer-locatie-1").innerHTML = locatie1;
+
+    var locatie2 = document.getElementById("input-locatie-2").value;
+    document.getElementById("footer-locatie-2").innerHTML = locatie2;
+
+    console.log(locatie2.length);
+
+    if (locatie2.length > 0) {
+      document.getElementById("footer-locatie-2-container").style.display =
+        "table-row";
+    }
   }
 </script>
 
 <table
   cellpadding="0"
   cellspacing="0"
-  class="sc-gPEVay eQYmiW"
   style="
     vertical-align: -webkit-baseline-middle;
     font-size: medium;
@@ -68,7 +96,6 @@
         <table
           cellpadding="0"
           cellspacing="0"
-          class="sc-gPEVay eQYmiW"
           style="
             vertical-align: -webkit-baseline-middle;
             font-size: medium;
@@ -80,7 +107,6 @@
               <td style="vertical-align: middle">
                 <h3
                   color="#000000"
-                  class="sc-fBuWsC eeihxG"
                   style="
                     margin: 0px;
                     font-size: 17px;
@@ -93,7 +119,6 @@
                 <p
                   color="#000000"
                   font-size="medium"
-                  class="sc-fMiknA bxZCMx"
                   style="
                     margin: 0px;
                     color: #181127;
@@ -109,7 +134,6 @@
                 color="#F2547D"
                 direction="vertical"
                 width="1"
-                class="sc-jhAzac hmXDXQ"
                 style="
                   width: 1px;
                   border-bottom: none;
@@ -121,7 +145,6 @@
                 <table
                   cellpadding="0"
                   cellspacing="0"
-                  class="sc-gPEVay eQYmiW"
                   style="
                     vertical-align: -webkit-baseline-middle;
                     font-size: medium;
@@ -134,7 +157,6 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          class="sc-gPEVay eQYmiW"
                           style="
                             vertical-align: -webkit-baseline-middle;
                             font-size: medium;
@@ -153,7 +175,6 @@
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
                                     color="#F2547D"
                                     width="18"
-                                    class="sc-iRbamj blSEcj"
                                     style="display: block"
                                 /></span>
                               </td>
@@ -181,7 +202,6 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          class="sc-gPEVay eQYmiW"
                           style="
                             vertical-align: -webkit-baseline-middle;
                             font-size: medium;
@@ -200,7 +220,6 @@
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
                                     color="#F2547D"
                                     width="18"
-                                    class="sc-iRbamj blSEcj"
                                     style="display: block"
                                 /></span>
                               </td>
@@ -228,7 +247,6 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          class="sc-gPEVay eQYmiW"
                           style="
                             vertical-align: -webkit-baseline-middle;
                             font-size: medium;
@@ -247,7 +265,6 @@
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
                                     color="#F2547D"
                                     width="18"
-                                    class="sc-iRbamj blSEcj"
                                     style="display: block"
                                 /></span>
                               </td>
@@ -274,7 +291,6 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          class="sc-gPEVay eQYmiW"
                           style="
                             vertical-align: -webkit-baseline-middle;
                             font-size: medium;
@@ -293,7 +309,6 @@
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
                                     color="#F2547D"
                                     width="18"
-                                    class="sc-iRbamj blSEcj"
                                     style="display: block"
                                 /></span>
                               </td>
@@ -302,22 +317,22 @@
                         </table>
                       </td>
                       <td style="padding: 0px">
-                        <span
-                          color="#000000"
-                          class="sc-csuQGl CQhxV"
-                          style="font-size: 12px; color: #181127"
-                          ><span
-                            >Vleeshouwersstraat 1, B-2800 Mechelen</span
-                          ></span
-                        >
+                        <span>
+                          <span id="footer-locatie-1"
+                          style="font-size: 12px; color: #181127">
+                        </span>
+                      </span>
                       </td>
                     </tr>
-                    <tr height="25" style="vertical-align: middle">
+                    <tr
+                      id="footer-locatie-2-container"
+                      height="25"
+                      style="vertical-align: middle; display: none;"
+                    >
                       <td width="30" style="vertical-align: middle">
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          class="sc-gPEVay eQYmiW"
                           style="
                             vertical-align: -webkit-baseline-middle;
                             font-size: medium;
@@ -332,12 +347,14 @@
                         </table>
                       </td>
                       <td style="padding: 0px">
-                        <span
-                          color="#000000"
-                          class="sc-csuQGl CQhxV"
-                          style="font-size: 12px; color: #181127"
-                          ><span>Zand 10 b0201, B-9160 Lokeren</span></span
-                        >
+                        <span></span>
+                          <span
+                            id="footer-locatie-2"
+                            style="font-size: 12px; color: #181127"
+                            >
+                            </span
+                          >
+                        </span>
                       </td>
                     </tr>
                   </tbody>
@@ -353,13 +370,12 @@
         <table
           cellpadding="0"
           cellspacing="0"
-          class="sc-gPEVay eQYmiW"
           style="
             vertical-align: -webkit-baseline-middle;
             font-size: medium;
             font-family: Segoe UI;
             width: 100%;
-            margin-top: 2px;
+            margin-top: 5px;
           "
         >
           <tbody>
@@ -376,7 +392,6 @@
                 <table
                   cellpadding="0"
                   cellspacing="0"
-                  class="sc-gPEVay eQYmiW"
                   style="
                     vertical-align: -webkit-baseline-middle;
                     font-size: medium;
@@ -390,50 +405,22 @@
                       <td>
                         <a
                           href="https://www.facebook.com/tritontravel.be"
-                          color="#6A78D1"
-                          class="sc-hzDkRC kpsoyz"
                           style="display: inline-block; padding: 0px"
                           ><img
                             src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
                             alt="facebook"
-                            color="#6A78D1"
-                            height="18"
-                            width="18"
-                            class="sc-bRBYWo ccSRck"
-                            style="
-                              background-color: #03c239;
-                              max-width: 135px;
-                              display: block;
-                            "
+                            height="22"
+                            width="22"
                         /></a>
                       </td>
                       <td width="5"><div></div></td>
                       <td>
-                        <a
-                          href="https://www.linkedin.com/company/tritontravel"
-                          color="#6A78D1"
-                          class="sc-hzDkRC kpsoyz"
-                          style="
-                            display: inline-block;
-                            padding: 0px;
-                            height: 18px;
-                            width: 18px;
-                            border-radius: 50%;
-                            padding: 5px;
-                            background-color: #03c239;
-                          "
+                        <a href="https://www.linkedin.com/company/tritontravel"
                           ><img
                             src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
                             alt="linkedin"
-                            color="#6A78D1"
-                            height="18"
-                            width="18"
-                            class="sc-bRBYWo ccSRck"
-                            style="
-                              background-color: #03c239;
-                              max-width: 135px;
-                              display: block;
-                            "
+                            height="22"
+                            width="22"
                         /></a>
                       </td>
                       <td width="5"><div></div></td>
@@ -441,31 +428,14 @@
                         <a
                           href="https://www.instagram.com/triton_travel_mechelen/"
                           color="#6A78D1"
-                          class="sc-hzDkRC kpsoyz"
-                          style="
-                            display: inline-block;
-                            padding: 0px;
-                            height: 18px;
-                            width: 18px;
-                            border-radius: 50%;
-                            padding: 5px;
-                            background-color: #03c239;
-                          "
+                          style="display: inline-block"
                           ><img
                             src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
                             alt="instagram"
-                            color="#6A78D1"
-                            height="18"
-                            width="18"
-                            class="sc-bRBYWo ccSRck"
-                            style="
-                              background-color: #03c239;
-                              max-width: 135px;
-                              display: block;
-                            "
+                            height="22"
+                            width="22"
                         /></a>
                       </td>
-                      <td width="0"><div></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -480,7 +450,6 @@
         <table
           cellpadding="0"
           cellspacing="0"
-          class="sc-gPEVay eQYmiW"
           style="
             vertical-align: -webkit-baseline-middle;
             font-size: medium;
@@ -497,7 +466,6 @@
                 color="#F2547D"
                 direction="horizontal"
                 height="1"
-                class="sc-jhAzac hmXDXQ"
                 style="
                   width: 100%;
                   border-bottom: 1px solid #03c239;
