@@ -2,85 +2,50 @@
   <h1>Configuratie</h1>
 
   <h2>Naam</h2>
-  <input
-    type="text"
-    id="input-naam"
-    onkeyup="updateFooter()"
-    onchange="updateFooter()"
-  />
+  <input type="text" id="input-naam" onkeyup="updateFooter()" onchange="updateFooter()" />
 
   <h2>Functie</h2>
-  <input
-    type="text"
-    id="input-functie"
-    onkeyup="updateFooter()"
-    onchange="updateFooter()"
-  />
+  <input type="text" id="input-functie" onkeyup="updateFooter()" onchange="updateFooter()" />
 
   <h2>GSM</h2>
-  <input
-    type="text"
-    id="input-gsm"
-    onkeyup="updateFooter()"
-    onchange="updateFooter()"
-  />
+  <input type="text" id="input-gsm" onkeyup="updateFooter()" onchange="updateFooter()" />
 
   <h2>E-mail</h2>
-  <input
-    type="text"
-    id="input-email"
-    onkeyup="updateFooter()"
-    onchange="updateFooter()"
-  />
+  <input type="text" id="input-email" onkeyup="updateFooter()" onchange="updateFooter()" />
 
   <h2>Locatie 1</h2>
-  <input
-    type="text"
-    id="input-locatie-1"
-    onkeyup="updateFooter()"
-    onchange="updateFooter()"
-  />
+  <input type="text" id="input-locatie-1" onkeyup="updateFooter()" onchange="updateFooter()" />
 
   <h2>Locatie 2</h2>
-  <input
-    type="text"
-    id="input-locatie-2"
-    onkeyup="updateFooter()"
-    onchange="updateFooter()"
-  />
+  <input type="text" id="input-locatie-2" onkeyup="updateFooter()" onchange="updateFooter()" />
 </div>
 
 <script>
   function updateFooter() {
-    var naam = document.getElementById("input-naam").value;
-    document.getElementById("footer-naam").innerHTML = naam;
+    var naam = document.getElementById('input-naam').value;
+    document.getElementById('footer-naam').innerHTML = naam;
 
-    var functie = document.getElementById("input-functie").value;
-    document.getElementById("footer-functie").innerHTML = functie;
+    var functie = document.getElementById('input-functie').value;
+    document.getElementById('footer-functie').innerHTML = functie;
 
-    var gsm = document.getElementById("input-gsm").value;
-    document.getElementById("footer-gsm").innerHTML = gsm;
-    document.getElementById("link-gsm").href = "tel: " + gsm;
+    var gsm = document.getElementById('input-gsm').value;
+    document.getElementById('footer-gsm').innerHTML = gsm;
+    document.getElementById('link-gsm').href = 'tel: ' + gsm;
 
-    var email = document.getElementById("input-email").value;
-    document.getElementById("footer-email").innerHTML = email;
-    document.getElementById("link-email").href = "mailto: " + email;
+    var email = document.getElementById('input-email').value;
+    document.getElementById('footer-email').innerHTML = email;
+    document.getElementById('link-email').href = 'mailto: ' + email;
 
-    var locatie1 = document.getElementById("input-locatie-1").value;
-    document.getElementById("footer-locatie-1").innerHTML = locatie1;
+    var locatie1 = document.getElementById('input-locatie-1').value;
+    document.getElementById('footer-locatie-1').innerHTML = locatie1;
 
-    var locatie2 = document.getElementById("input-locatie-2").value;
-    document.getElementById("footer-locatie-2").innerHTML = locatie2;
-
-    console.log(locatie2.length);
+    var locatie2 = document.getElementById('input-locatie-2').value;
+    document.getElementById('footer-locatie-2').innerHTML = locatie2;
 
     if (locatie2.length > 0) {
-      document.getElementById("footer-locatie-2-container").style.display =
-        "table-row";
-    }
-    else {
-      document.getElementById("footer-locatie-2-container").style.display =
-        "none";
+      document.getElementById('footer-locatie-2-container').style.display = 'table-row';
+    } else {
+      document.getElementById('footer-locatie-2-container').style.display = 'none';
     }
   }
 </script>
@@ -88,11 +53,7 @@
 <table
   cellpadding="0"
   cellspacing="0"
-  style="
-    vertical-align: -webkit-baseline-middle;
-    font-size: medium;
-    font-family: Segoe UI;
-  "
+  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
 >
   <tbody>
     <tr>
@@ -100,35 +61,18 @@
         <table
           cellpadding="0"
           cellspacing="0"
-          style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-          "
+          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
         >
           <tbody>
             <tr>
               <td style="vertical-align: middle">
-                <h3
-                  color="#000000"
-                  style="
-                    margin: 0px;
-                    font-size: 17px;
-                    font-weight: 500;
-                    color: #181127;
-                  "
-                >
+                <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
                   <span id="footer-naam"></span>
                 </h3>
                 <p
                   color="#000000"
                   font-size="medium"
-                  style="
-                    margin: 0px;
-                    color: #181127;
-                    font-size: 12px;
-                    line-height: 22px;
-                  "
+                  style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px"
                 >
                   <span id="footer-functie"></span>
                 </p>
@@ -138,22 +82,14 @@
                 color="#F2547D"
                 direction="vertical"
                 width="1"
-                style="
-                  width: 1px;
-                  border-bottom: none;
-                  border-left: 1px solid #03c239;
-                "
+                style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"
               ></td>
               <td width="15"><div style="width: 15px"></div></td>
               <td style="vertical-align: middle">
                 <table
                   cellpadding="0"
                   cellspacing="0"
-                  style="
-                    vertical-align: -webkit-baseline-middle;
-                    font-size: medium;
-                    font-family: Segoe UI;
-                  "
+                  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
                 >
                   <tbody>
                     <tr height="25" style="vertical-align: middle">
@@ -161,20 +97,12 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          style="
-                            vertical-align: -webkit-baseline-middle;
-                            font-size: medium;
-                            font-family: Segoe UI;
-                          "
+                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
                         >
                           <tbody>
                             <tr>
                               <td style="vertical-align: bottom">
-                                <span
-                                  color="#F2547D"
-                                  width="18"
-                                  class="sc-jlyJG bbyJzT"
-                                  style="display: block"
+                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
                                   ><img
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
                                     color="#F2547D"
@@ -192,11 +120,7 @@
                           href=""
                           color="#000000"
                           class="sc-gipzik iyhjGb"
-                          style="
-                            text-decoration: none;
-                            color: #181127;
-                            font-size: 12px;
-                          "
+                          style="text-decoration: none; color: #181127; font-size: 12px"
                           ><span id="footer-gsm"></span
                         ></a>
                       </td>
@@ -206,20 +130,12 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          style="
-                            vertical-align: -webkit-baseline-middle;
-                            font-size: medium;
-                            font-family: Segoe UI;
-                          "
+                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
                         >
                           <tbody>
                             <tr>
                               <td style="vertical-align: bottom">
-                                <span
-                                  color="#F2547D"
-                                  width="18"
-                                  class="sc-jlyJG bbyJzT"
-                                  style="display: block"
+                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
                                   ><img
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
                                     color="#F2547D"
@@ -237,11 +153,7 @@
                           href=""
                           color="#000000"
                           class="sc-gipzik iyhjGb"
-                          style="
-                            text-decoration: none;
-                            color: #181127;
-                            font-size: 12px;
-                          "
+                          style="text-decoration: none; color: #181127; font-size: 12px"
                           ><span id="footer-email"></span
                         ></a>
                       </td>
@@ -251,20 +163,12 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          style="
-                            vertical-align: -webkit-baseline-middle;
-                            font-size: medium;
-                            font-family: Segoe UI;
-                          "
+                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
                         >
                           <tbody>
                             <tr>
                               <td style="vertical-align: bottom">
-                                <span
-                                  color="#F2547D"
-                                  width="18"
-                                  class="sc-jlyJG bbyJzT"
-                                  style="display: block"
+                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
                                   ><img
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
                                     color="#F2547D"
@@ -281,11 +185,7 @@
                           href="//www.tritontravel.be"
                           color="#000000"
                           class="sc-gipzik iyhjGb"
-                          style="
-                            text-decoration: none;
-                            color: #181127;
-                            font-size: 12px;
-                          "
+                          style="text-decoration: none; color: #181127; font-size: 12px"
                           ><span>www.tritontravel.be</span></a
                         >
                       </td>
@@ -295,20 +195,12 @@
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          style="
-                            vertical-align: -webkit-baseline-middle;
-                            font-size: medium;
-                            font-family: Segoe UI;
-                          "
+                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
                         >
                           <tbody>
                             <tr>
                               <td style="vertical-align: bottom">
-                                <span
-                                  color="#F2547D"
-                                  width="18"
-                                  class="sc-jlyJG bbyJzT"
-                                  style="display: block"
+                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
                                   ><img
                                     src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
                                     color="#F2547D"
@@ -322,26 +214,16 @@
                       </td>
                       <td style="padding: 0px">
                         <span>
-                          <span id="footer-locatie-1"
-                          style="font-size: 12px; color: #181127">
+                          <span id="footer-locatie-1" style="font-size: 12px; color: #181127"> </span>
                         </span>
-                      </span>
                       </td>
                     </tr>
-                    <tr
-                      id="footer-locatie-2-container"
-                      height="25"
-                      style="vertical-align: middle; display: none;"
-                    >
+                    <tr id="footer-locatie-2-container" height="25" style="vertical-align: middle; display: none">
                       <td width="30" style="vertical-align: middle">
                         <table
                           cellpadding="0"
                           cellspacing="0"
-                          style="
-                            vertical-align: -webkit-baseline-middle;
-                            font-size: medium;
-                            font-family: Segoe UI;
-                          "
+                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
                         >
                           <tbody>
                             <tr>
@@ -351,13 +233,8 @@
                         </table>
                       </td>
                       <td style="padding: 0px">
-                        <span></span>
-                          <span
-                            id="footer-locatie-2"
-                            style="font-size: 12px; color: #181127"
-                            >
-                            </span
-                          >
+                        <span>
+                          <span id="footer-locatie-2" style="font-size: 12px; color: #181127"> </span>
                         </span>
                       </td>
                     </tr>
@@ -407,9 +284,7 @@
                   <tbody>
                     <tr style="text-align: right">
                       <td>
-                        <a
-                          href="https://www.facebook.com/tritontravel.be"
-                          style="display: inline-block; padding: 0px"
+                        <a href="https://www.facebook.com/tritontravel.be" style="display: inline-block; padding: 0px"
                           ><img
                             src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
                             alt="facebook"
@@ -454,12 +329,7 @@
         <table
           cellpadding="0"
           cellspacing="0"
-          style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-            width: 100%;
-          "
+          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
         >
           <tbody>
             <tr>
@@ -470,12 +340,7 @@
                 color="#F2547D"
                 direction="horizontal"
                 height="1"
-                style="
-                  width: 100%;
-                  border-bottom: 1px solid #03c239;
-                  border-left: none;
-                  display: block;
-                "
+                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
               ></td>
             </tr>
             <tr>
@@ -486,21 +351,15 @@
       </td>
     </tr>
     <tr>
-      <td 
-      style="
-        white-space:pre;
-        text-decoration: none;
-        color: #181127;
-        font-size: 12px;
-        font-style: italic;
-      ">
-        Alle vermelde prijzen zijn onder voorbehoud van een definitieve reservatie en/of ticketuitgifte.
-        Gelieve steeds te controleren of uw paspoort en eventuele visa in orde zijn.
-        Vergeet tevens niet om alle actuele Covid-reisregels na te kijken.
-        Enkele bronnen die u kan raadplegen: <a style="
-        color: #181127;" href="https://www.diplomatie.be">www.diplomatie.be</a>, <a style="
-        color: #181127;" href="https://www.iatatravelcentre.com/world.php">https://www.iatatravelcentre.com/world.php</a> en <a style="
-        color: #181127;" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
+      <td style="white-space: pre; text-decoration: none; color: #181127; font-size: 12px; font-style: italic">
+        Alle vermelde prijzen zijn onder voorbehoud van een definitieve reservatie en/of ticketuitgifte. Gelieve steeds
+        te controleren of uw paspoort en eventuele visa in orde zijn. Vergeet tevens niet om alle actuele
+        Covid-reisregels na te kijken. Enkele bronnen die u kan raadplegen:
+        <a style="color: #181127" href="https://www.diplomatie.be">www.diplomatie.be</a>,
+        <a style="color: #181127" href="https://www.iatatravelcentre.com/world.php"
+          >https://www.iatatravelcentre.com/world.php</a
+        >
+        en <a style="color: #181127" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
       </td>
     </tr>
     <tr>
@@ -508,12 +367,7 @@
         <table
           cellpadding="0"
           cellspacing="0"
-          style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-            width: 100%;
-          "
+          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
         >
           <tbody>
             <tr>
@@ -524,12 +378,7 @@
                 color="#F2547D"
                 direction="horizontal"
                 height="1"
-                style="
-                  width: 100%;
-                  border-bottom: 1px solid #03c239;
-                  border-left: none;
-                  display: block;
-                "
+                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
               ></td>
             </tr>
             <tr>
