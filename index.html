@@ -1,34 +1,154 @@
-<div style="margin-bottom: 100px">
+<style>
+  body {
+    background: #f8f9fa;
+  }
+
+  .signature-wrapper {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+  .signature-wrapper:last-child {
+    margin-bottom: 1rem;
+  }
+  .signature-wrapper .copy-signature-btn {
+    margin-bottom: 0.4rem;
+  }
+  .copy-signature-btn {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    background: #03c239;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+  .copy-signature-btn:hover {
+    background: #02a330;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  }
+  .copy-signature-btn:disabled {
+    opacity: 0.8;
+    cursor: default;
+    box-shadow: none;
+  }
+
+  .config-section {
+    margin-bottom: 100px;
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+  .config-section h1 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #181127;
+  }
+  .config-section .field {
+    display: inline-block;
+    margin-right: 1.5rem;
+    margin-bottom: 1.25rem;
+    vertical-align: top;
+  }
+  .config-section .field h2 {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .config-section input[type='text'] {
+    display: block;
+    min-width: 200px;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    font-family: inherit;
+    color: #181127;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+  .config-section input[type='text']:hover {
+    border-color: #adb5bd;
+  }
+  .config-section input[type='text']:focus {
+    outline: none;
+    border-color: #03c239;
+    box-shadow: 0 0 0 3px rgba(3, 194, 57, 0.15);
+  }
+  .config-section input[type='text']::placeholder {
+    color: #adb5bd;
+  }
+</style>
+<div class="config-section">
   <h1>Configuratie</h1>
 
-  <span style="display: inline-block">
+  <span class="field">
     <h2>Naam</h2>
-    <input type="text" id="input-naam" onkeyup="updateFooter()" onchange="updateFooter()" />
+    <input type="text" id="input-naam" placeholder="Uw naam" onkeyup="updateFooter()" onchange="updateFooter()" />
   </span>
 
-  <span style="display: inline-block">
+  <span class="field">
     <h2>Functie</h2>
-    <input type="text" id="input-functie" onkeyup="updateFooter()" onchange="updateFooter()" />
+    <input
+      type="text"
+      id="input-functie"
+      placeholder="Functietitel"
+      onkeyup="updateFooter()"
+      onchange="updateFooter()"
+    />
   </span>
 
-  <span style="display: inline-block">
+  <span class="field">
     <h2>GSM</h2>
-    <input type="text" id="input-gsm" onkeyup="updateFooter()" onchange="updateFooter()" />
+    <input type="text" id="input-gsm" placeholder="+32 ..." onkeyup="updateFooter()" onchange="updateFooter()" />
   </span>
 
-  <span style="display: inline-block">
+  <span class="field">
     <h2>E-mail</h2>
-    <input type="text" id="input-email" onkeyup="updateFooter()" onchange="updateFooter()" />
+    <input
+      type="text"
+      id="input-email"
+      placeholder="naam@tritontravel.be"
+      onkeyup="updateFooter()"
+      onchange="updateFooter()"
+    />
   </span>
 
-  <span style="display: inline-block">
+  <span class="field">
     <h2>Locatie 1</h2>
-    <input type="text" id="input-locatie-1" onkeyup="updateFooter()" onchange="updateFooter()" />
+    <input
+      type="text"
+      id="input-locatie-1"
+      placeholder="Adres of vestiging"
+      onkeyup="updateFooter()"
+      onchange="updateFooter()"
+    />
   </span>
 
-  <span style="display: inline-block">
+  <span class="field">
     <h2>Locatie 2</h2>
-    <input type="text" id="input-locatie-2" onkeyup="updateFooter()" onchange="updateFooter()" />
+    <input
+      type="text"
+      id="input-locatie-2"
+      placeholder="Optioneel"
+      onkeyup="updateFooter()"
+      onchange="updateFooter()"
+    />
   </span>
 </div>
 
@@ -102,1182 +222,1732 @@
       document.getElementById('footer-locatie-2-container-globalstar').style.display = 'none';
     }
   }
+
+  function copySignature(wrapperId) {
+    var wrapper = document.getElementById(wrapperId);
+    var table = wrapper ? wrapper.querySelector('table') : null;
+    if (!table) return;
+    var html = table.outerHTML;
+    if (navigator.clipboard && navigator.clipboard.write && window.isSecureContext) {
+      var blob = new Blob([html], { type: 'text/html' });
+      var plain = new Blob([html], { type: 'text/plain' });
+      navigator.clipboard
+        .write([new ClipboardItem({ 'text/html': blob, 'text/plain': plain })])
+        .then(function () {
+          showCopyFeedback(wrapperId);
+        })
+        .catch(function () {
+          copySignatureAsSelection(table, wrapperId);
+        });
+    } else {
+      copySignatureAsSelection(table, wrapperId);
+    }
+  }
+
+  function copySignatureAsSelection(node, wrapperId) {
+    var container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.left = '-9999px';
+    container.style.top = '0';
+    container.innerHTML = node.outerHTML;
+    document.body.appendChild(container);
+    var range = document.createRange();
+    range.selectNodeContents(container);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    try {
+      if (document.execCommand('copy')) {
+        showCopyFeedback(wrapperId);
+      }
+    } catch (err) {}
+    sel.removeAllRanges();
+    document.body.removeChild(container);
+  }
+
+  function showCopyFeedback(wrapperId) {
+    var btn = document.querySelector('#' + wrapperId + ' .copy-signature-btn');
+    if (!btn) return;
+    var orig = btn.textContent;
+    btn.textContent = 'Gekopieerd!';
+    btn.disabled = true;
+    setTimeout(function () {
+      btn.textContent = orig;
+      btn.disabled = false;
+    }, 1500);
+  }
 </script>
 
-<!-- Default Footer -->
-<table cellpadding="0" cellspacing="0"
-  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-  <tbody>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-          <tbody>
-            <tr>
-              <td style="vertical-align: middle">
-                <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
-                  <span id="footer-naam-nl"></span>
-                </h3>
-                <p color="#000000" font-size="medium"
-                  style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px">
-                  <span id="footer-functie-nl"></span>
-                </p>
-              </td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td color="#F2547D" direction="vertical" width="1"
-                style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"></td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td style="vertical-align: middle">
-                <table cellpadding="0" cellspacing="0"
-                  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                  <tbody>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px; color: #181127">
-                        <a id="link-gsm-nl" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-gsm-nl"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a id="link-email-nl" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-email-nl"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a href="https://www.tritontravel.be" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span>www.tritontravel.be</span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-1-nl" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr id="footer-locatie-2-container-nl" height="25" style="vertical-align: middle; display: none">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom"></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-2-nl" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0" style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-            width: 100%;
-            margin-top: 5px;
-          ">
-          <tbody>
-            <tr>
-              <td>
-                <a href="https://www.tritontravel.be" target="_blank">
-                  <img src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
-                    width="150px" />
-                </a>
-              </td>
-              <td style="text-align: right; vertical-align: top">
-                <table cellpadding="0" cellspacing="0" style="
-                    vertical-align: -webkit-baseline-middle;
-                    font-size: medium;
-                    font-family: Segoe UI;
-                    display: inline-block;
-                    margin-top: 10px;
-                  ">
-                  <tbody>
-                    <tr style="text-align: right">
-                      <td>
-                        <a href="https://www.facebook.com/tritontravel.be"
-                          style="display: inline-block; padding: 0px"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
-                            alt="facebook" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.linkedin.com/company/tritontravel"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
-                            alt="linkedin" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.instagram.com/triton_travel_mechelen/" color="#6A78D1"
-                          style="display: inline-block"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
-                            alt="instagram" height="22" width="22" /></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<!-- Default Signature -->
+<div class="signature-wrapper" id="signature-default">
+  <button type="button" class="copy-signature-btn" onclick="copySignature('signature-default')">Copy signature</button>
+  <table
+    cellpadding="0"
+    cellspacing="0"
+    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+          >
+            <tbody>
+              <tr>
+                <td style="vertical-align: middle">
+                  <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
+                    <span id="footer-naam-nl"></span>
+                  </h3>
+                  <p
+                    color="#000000"
+                    font-size="medium"
+                    style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px"
+                  >
+                    <span id="footer-functie-nl"></span>
+                  </p>
+                </td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td
+                  color="#F2547D"
+                  direction="vertical"
+                  width="1"
+                  style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"
+                ></td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td style="vertical-align: middle">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                  >
+                    <tbody>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px; color: #181127">
+                          <a
+                            id="link-gsm-nl"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-gsm-nl"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            id="link-email-nl"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-email-nl"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            href="https://www.tritontravel.be"
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span>www.tritontravel.be</span></a
+                          >
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-1-nl" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr id="footer-locatie-2-container-nl" height="25" style="vertical-align: middle; display: none">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-2-nl" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              vertical-align: -webkit-baseline-middle;
+              font-size: medium;
+              font-family: Segoe UI;
+              width: 100%;
+              margin-top: 5px;
+            "
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <a href="https://www.tritontravel.be" target="_blank">
+                    <img
+                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
+                      width="150px"
+                    />
+                  </a>
+                </td>
+                <td style="text-align: right; vertical-align: top">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="
+                      vertical-align: -webkit-baseline-middle;
+                      font-size: medium;
+                      font-family: Segoe UI;
+                      display: inline-block;
+                      margin-top: 10px;
+                    "
+                  >
+                    <tbody>
+                      <tr style="text-align: right">
+                        <td>
+                          <a href="https://www.facebook.com/tritontravel.be" style="display: inline-block; padding: 0px"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
+                              alt="facebook"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a href="https://www.linkedin.com/company/tritontravel"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
+                              alt="linkedin"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a
+                            href="https://www.instagram.com/triton_travel_mechelen/"
+                            color="#6A78D1"
+                            style="display: inline-block"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
+                              alt="instagram"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<br />
-<br />
-<br />
+<!-- Default Signature NL -->
+<div class="signature-wrapper" id="signature-nl">
+  <button type="button" class="copy-signature-btn" onclick="copySignature('signature-nl')">Copy signature</button>
+  <table
+    cellpadding="0"
+    cellspacing="0"
+    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+          >
+            <tbody>
+              <tr>
+                <td style="vertical-align: middle">
+                  <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
+                    <span id="footer-naam"></span>
+                  </h3>
+                  <p
+                    color="#000000"
+                    font-size="medium"
+                    style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px"
+                  >
+                    <span id="footer-functie"></span>
+                  </p>
+                </td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td
+                  color="#F2547D"
+                  direction="vertical"
+                  width="1"
+                  style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"
+                ></td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td style="vertical-align: middle">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                  >
+                    <tbody>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px; color: #181127">
+                          <a
+                            id="link-gsm"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-gsm"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            id="link-email"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-email"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            href="https://www.tritontravel.be"
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span>www.tritontravel.be</span></a
+                          >
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-1" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr id="footer-locatie-2-container" height="25" style="vertical-align: middle; display: none">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-2" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              vertical-align: -webkit-baseline-middle;
+              font-size: medium;
+              font-family: Segoe UI;
+              width: 100%;
+              margin-top: 5px;
+            "
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <a href="https://www.tritontravel.be" target="_blank">
+                    <img
+                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
+                      width="150px"
+                    />
+                  </a>
+                </td>
+                <td style="text-align: right; vertical-align: top">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="
+                      vertical-align: -webkit-baseline-middle;
+                      font-size: medium;
+                      font-family: Segoe UI;
+                      display: inline-block;
+                      margin-top: 10px;
+                    "
+                  >
+                    <tbody>
+                      <tr style="text-align: right">
+                        <td>
+                          <a href="https://www.facebook.com/tritontravel.be" style="display: inline-block; padding: 0px"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
+                              alt="facebook"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a href="https://www.linkedin.com/company/tritontravel"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
+                              alt="linkedin"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a
+                            href="https://www.instagram.com/triton_travel_mechelen/"
+                            color="#6A78D1"
+                            style="display: inline-block"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
+                              alt="instagram"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-decoration: none; color: #181127; font-size: 12px; font-style: italic">
+          Alle vermelde prijzen zijn onder voorbehoud van een definitieve reservatie en/of ticketuitgifte.<br />Gelieve
+          steeds te controleren of uw paspoort en eventuele visa in orde zijn.<br />Vergeet tevens niet om alle actuele
+          Covid-reisregels en andere gezondheidsinformatie na te kijken.<br />Enkele bronnen die u kan raadplegen:
+          <a style="color: #181127" target="_blank" href="https://www.diplomatie.be">www.diplomatie.be</a>,
+          <a style="color: #181127" target="_blank" href="https://www.iatatravelcentre.com/world.php"
+            >https://www.iatatravelcentre.com/world.php</a
+          >
+          en
+          <a style="color: #181127" target="_blank" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
+          <br />
+          Dringende hulp buiten de kantooruren: contacteer onze Rescue Line (24/7 noodlijn, betalende service):<br />
+          <a style="color: #181127" target="_blank" href="https://afterhours.travel/trf/VQJ6X3"
+            >https://afterhours.travel/trf/VQJ6X3</a
+          >
+          – <a style="color: #181127" href="tel:+441344283493">+44 1344283493</a> –
+          <a style="color: #181127" href="mailto:triton@afterhours.travel">triton@afterhours.travel</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<!-- Default Footer NL -->
-<table cellpadding="0" cellspacing="0"
-  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-  <tbody>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-          <tbody>
-            <tr>
-              <td style="vertical-align: middle">
-                <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
-                  <span id="footer-naam"></span>
-                </h3>
-                <p color="#000000" font-size="medium"
-                  style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px">
-                  <span id="footer-functie"></span>
-                </p>
-              </td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td color="#F2547D" direction="vertical" width="1"
-                style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"></td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td style="vertical-align: middle">
-                <table cellpadding="0" cellspacing="0"
-                  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                  <tbody>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px; color: #181127">
-                        <a id="link-gsm" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-gsm"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a id="link-email" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-email"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a href="https://www.tritontravel.be" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span>www.tritontravel.be</span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-1" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr id="footer-locatie-2-container" height="25" style="vertical-align: middle; display: none">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom"></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-2" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0" style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-            width: 100%;
-            margin-top: 5px;
-          ">
-          <tbody>
-            <tr>
-              <td>
-                <a href="https://www.tritontravel.be" target="_blank">
-                  <img src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
-                    width="150px" />
-                </a>
-              </td>
-              <td style="text-align: right; vertical-align: top">
-                <table cellpadding="0" cellspacing="0" style="
-                    vertical-align: -webkit-baseline-middle;
-                    font-size: medium;
-                    font-family: Segoe UI;
-                    display: inline-block;
-                    margin-top: 10px;
-                  ">
-                  <tbody>
-                    <tr style="text-align: right">
-                      <td>
-                        <a href="https://www.facebook.com/tritontravel.be"
-                          style="display: inline-block; padding: 0px"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
-                            alt="facebook" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.linkedin.com/company/tritontravel"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
-                            alt="linkedin" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.instagram.com/triton_travel_mechelen/" color="#6A78D1"
-                          style="display: inline-block"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
-                            alt="instagram" height="22" width="22" /></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-decoration: none; color: #181127; font-size: 12px; font-style: italic">
-        Alle vermelde prijzen zijn onder voorbehoud van een definitieve reservatie en/of ticketuitgifte.<br />Gelieve
-        steeds te controleren of uw paspoort en eventuele visa in orde zijn.<br />Vergeet tevens niet om alle actuele
-        Covid-reisregels en andere gezondheidsinformatie na te kijken.<br />Enkele bronnen die u kan raadplegen:
-        <a style="color: #181127" href="https://www.diplomatie.be">www.diplomatie.be</a>,
-        <a style="color: #181127"
-          href="https://www.iatatravelcentre.com/world.php">https://www.iatatravelcentre.com/world.php</a>
-        en <a style="color: #181127" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<!-- Default Signature EN -->
+<div class="signature-wrapper" id="signature-en">
+  <button type="button" class="copy-signature-btn" onclick="copySignature('signature-en')">Copy signature</button>
+  <table
+    cellpadding="0"
+    cellspacing="0"
+    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+          >
+            <tbody>
+              <tr>
+                <td style="vertical-align: middle">
+                  <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
+                    <span id="footer-naam-en"></span>
+                  </h3>
+                  <p
+                    color="#000000"
+                    font-size="medium"
+                    style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px"
+                  >
+                    <span id="footer-functie-en"></span>
+                  </p>
+                </td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td
+                  color="#F2547D"
+                  direction="vertical"
+                  width="1"
+                  style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"
+                ></td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td style="vertical-align: middle">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                  >
+                    <tbody>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px; color: #181127">
+                          <a
+                            id="link-gsm-en"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-gsm-en"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            id="link-email-en"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-email-en"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            href="https://www.tritontravel.be"
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span>www.tritontravel.be</span></a
+                          >
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-1-en" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr id="footer-locatie-2-container-en" height="25" style="vertical-align: middle; display: none">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-2-en" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              vertical-align: -webkit-baseline-middle;
+              font-size: medium;
+              font-family: Segoe UI;
+              width: 100%;
+              margin-top: 5px;
+            "
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <a href="https://www.tritontravel.be" target="_blank">
+                    <img
+                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
+                      width="150px"
+                    />
+                  </a>
+                </td>
+                <td style="text-align: right; vertical-align: top">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="
+                      vertical-align: -webkit-baseline-middle;
+                      font-size: medium;
+                      font-family: Segoe UI;
+                      display: inline-block;
+                      margin-top: 10px;
+                    "
+                  >
+                    <tbody>
+                      <tr style="text-align: right">
+                        <td>
+                          <a href="https://www.facebook.com/tritontravel.be" style="display: inline-block; padding: 0px"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
+                              alt="facebook"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a href="https://www.linkedin.com/company/tritontravel"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
+                              alt="linkedin"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a
+                            href="https://www.instagram.com/triton_travel_mechelen/"
+                            color="#6A78D1"
+                            style="display: inline-block"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
+                              alt="instagram"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-decoration: none; color: #181127; font-size: 12px; font-style: italic">
+          Les prix indiqués sont sous réserve de la réservation finale et/ou de l'émission du billet.<br />Veuillez
+          toujours contrôler que votre passeport et vos visas éventuels sont en règle.<br />N’oubliez pas de vérifier
+          toutes les règles actuelles du Covid et autres informations de santé.<br />Quelques sources que vous pouvez
+          consulter: <a style="color: #181127" href="https://www.diplomatie.be">www.diplomatie.be</a>,
+          <a style="color: #181127" href="https://www.iatatravelcentre.com/world.php"
+            >https://www.iatatravelcentre.com/world.php</a
+          >
+          en <a style="color: #181127" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
+          <br />
+          Assistance urgente en dehors les heures de bureau: contactez notre Rescue Line (ligne d'urgence 24/7, service
+          payant):<br />
+          <a style="color: #181127" target="_blank" href="https://afterhours.travel/trf/VQJ6X3"
+            >https://afterhours.travel/trf/VQJ6X3</a
+          >
+          – <a style="color: #181127" href="tel:+441344283493">+44 1344283493</a> –
+          <a style="color: #181127" href="mailto:triton@afterhours.travel">triton@afterhours.travel</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<br />
-<br />
-<br />
-
-<!-- Default Footer EN -->
-<table cellpadding="0" cellspacing="0"
-  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-  <tbody>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-          <tbody>
-            <tr>
-              <td style="vertical-align: middle">
-                <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
-                  <span id="footer-naam-en"></span>
-                </h3>
-                <p color="#000000" font-size="medium"
-                  style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px">
-                  <span id="footer-functie-en"></span>
-                </p>
-              </td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td color="#F2547D" direction="vertical" width="1"
-                style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"></td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td style="vertical-align: middle">
-                <table cellpadding="0" cellspacing="0"
-                  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                  <tbody>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px; color: #181127">
-                        <a id="link-gsm-en" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-gsm-en"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a id="link-email-en" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-email-en"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a href="https://www.tritontravel.be" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span>www.tritontravel.be</span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-1-en" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr id="footer-locatie-2-container-en" height="25" style="vertical-align: middle; display: none">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom"></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-2-en" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0" style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-            width: 100%;
-            margin-top: 5px;
-          ">
-          <tbody>
-            <tr>
-              <td>
-                <a href="https://www.tritontravel.be" target="_blank">
-                  <img src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
-                    width="150px" />
-                </a>
-              </td>
-              <td style="text-align: right; vertical-align: top">
-                <table cellpadding="0" cellspacing="0" style="
-                    vertical-align: -webkit-baseline-middle;
-                    font-size: medium;
-                    font-family: Segoe UI;
-                    display: inline-block;
-                    margin-top: 10px;
-                  ">
-                  <tbody>
-                    <tr style="text-align: right">
-                      <td>
-                        <a href="https://www.facebook.com/tritontravel.be"
-                          style="display: inline-block; padding: 0px"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
-                            alt="facebook" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.linkedin.com/company/tritontravel"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
-                            alt="linkedin" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.instagram.com/triton_travel_mechelen/" color="#6A78D1"
-                          style="display: inline-block"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
-                            alt="instagram" height="22" width="22" /></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-decoration: none; color: #181127; font-size: 12px; font-style: italic">
-        Les prix indiqués sont sous réserve de la réservation finale et/ou de l'émission du billet.<br />Veuillez
-        toujours contrôler que votre passeport et vos visas éventuels sont en règle.<br />N’oubliez pas de vérifier
-        toutes les règles actuelles du Covid et autres informations de santé.<br />Quelques sources que vous pouvez
-        consulter: <a style="color: #181127" href="https://www.diplomatie.be">www.diplomatie.be</a>,
-        <a style="color: #181127"
-          href="https://www.iatatravelcentre.com/world.php">https://www.iatatravelcentre.com/world.php</a>
-        en <a style="color: #181127" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br />
-<br />
-<br />
-
-<!-- Default Footer FR -->
-<table cellpadding="0" cellspacing="0"
-  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-  <tbody>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-          <tbody>
-            <tr>
-              <td style="vertical-align: middle">
-                <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
-                  <span id="footer-naam-fr"></span>
-                </h3>
-                <p color="#000000" font-size="medium"
-                  style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px">
-                  <span id="footer-functie-fr"></span>
-                </p>
-              </td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td color="#F2547D" direction="vertical" width="1"
-                style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"></td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td style="vertical-align: middle">
-                <table cellpadding="0" cellspacing="0"
-                  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                  <tbody>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px; color: #181127">
-                        <a id="link-gsm-fr" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-gsm-fr"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a id="link-email-fr" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-email-fr"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a href="https://www.tritontravel.be" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span>www.tritontravel.be</span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-1-fr" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr id="footer-locatie-2-container-fr" height="25" style="vertical-align: middle; display: none">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom"></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-2-fr" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0" style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-            width: 100%;
-            margin-top: 5px;
-          ">
-          <tbody>
-            <tr>
-              <td>
-                <a href="https://www.tritontravel.be" target="_blank">
-                  <img src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
-                    width="150px" />
-                </a>
-              </td>
-              <td style="text-align: right; vertical-align: top">
-                <table cellpadding="0" cellspacing="0" style="
-                    vertical-align: -webkit-baseline-middle;
-                    font-size: medium;
-                    font-family: Segoe UI;
-                    display: inline-block;
-                    margin-top: 10px;
-                  ">
-                  <tbody>
-                    <tr style="text-align: right">
-                      <td>
-                        <a href="https://www.facebook.com/tritontravel.be"
-                          style="display: inline-block; padding: 0px"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
-                            alt="facebook" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.linkedin.com/company/tritontravel"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
-                            alt="linkedin" height="22" width="22" /></a>
-                      </td>
-                      <td width="5">
-                        <div></div>
-                      </td>
-                      <td>
-                        <a href="https://www.instagram.com/triton_travel_mechelen/" color="#6A78D1"
-                          style="display: inline-block"><img
-                            src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
-                            alt="instagram" height="22" width="22" /></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-decoration: none; color: #181127; font-size: 12px; font-style: italic">
-        All prices stated are subject to final reservation and/or ticket issuance.<br />Please always verify whether
-        your passport and possible visas are compliant.<br />Do not forget to check all current Covid rules and other
-        health information.<br />Some sources you can consult:
-        <a style="color: #181127" href="https://www.diplomatie.be">www.diplomatie.be</a>,
-        <a style="color: #181127"
-          href="https://www.iatatravelcentre.com/world.php">https://www.iatatravelcentre.com/world.php</a>
-        en <a style="color: #181127" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<br />
-<br />
-<br />
+<!-- Default Signature FR -->
+<div class="signature-wrapper" id="signature-fr">
+  <button type="button" class="copy-signature-btn" onclick="copySignature('signature-fr')">Copy signature</button>
+  <table
+    cellpadding="0"
+    cellspacing="0"
+    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+          >
+            <tbody>
+              <tr>
+                <td style="vertical-align: middle">
+                  <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
+                    <span id="footer-naam-fr"></span>
+                  </h3>
+                  <p
+                    color="#000000"
+                    font-size="medium"
+                    style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px"
+                  >
+                    <span id="footer-functie-fr"></span>
+                  </p>
+                </td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td
+                  color="#F2547D"
+                  direction="vertical"
+                  width="1"
+                  style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"
+                ></td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td style="vertical-align: middle">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                  >
+                    <tbody>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px; color: #181127">
+                          <a
+                            id="link-gsm-fr"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-gsm-fr"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            id="link-email-fr"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-email-fr"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            href="https://www.tritontravel.be"
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span>www.tritontravel.be</span></a
+                          >
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-1-fr" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr id="footer-locatie-2-container-fr" height="25" style="vertical-align: middle; display: none">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-2-fr" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              vertical-align: -webkit-baseline-middle;
+              font-size: medium;
+              font-family: Segoe UI;
+              width: 100%;
+              margin-top: 5px;
+            "
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <a href="https://www.tritontravel.be" target="_blank">
+                    <img
+                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
+                      width="150px"
+                    />
+                  </a>
+                </td>
+                <td style="text-align: right; vertical-align: top">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="
+                      vertical-align: -webkit-baseline-middle;
+                      font-size: medium;
+                      font-family: Segoe UI;
+                      display: inline-block;
+                      margin-top: 10px;
+                    "
+                  >
+                    <tbody>
+                      <tr style="text-align: right">
+                        <td>
+                          <a href="https://www.facebook.com/tritontravel.be" style="display: inline-block; padding: 0px"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/facebook-circular.png"
+                              alt="facebook"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a href="https://www.linkedin.com/company/tritontravel"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/linkedin-circular.png"
+                              alt="linkedin"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                        <td width="5">
+                          <div></div>
+                        </td>
+                        <td>
+                          <a
+                            href="https://www.instagram.com/triton_travel_mechelen/"
+                            color="#6A78D1"
+                            style="display: inline-block"
+                            ><img
+                              src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/instagram-circular.png"
+                              alt="instagram"
+                              height="22"
+                              width="22"
+                          /></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-decoration: none; color: #181127; font-size: 12px; font-style: italic">
+          All prices stated are subject to final reservation and/or ticket issuance.<br />Please always verify whether
+          your passport and possible visas are compliant.<br />Do not forget to check all current Covid rules and other
+          health information.<br />Some sources you can consult:
+          <a style="color: #181127" href="https://www.diplomatie.be">www.diplomatie.be</a>,
+          <a style="color: #181127" href="https://www.iatatravelcentre.com/world.php"
+            >https://www.iatatravelcentre.com/world.php</a
+          >
+          en <a style="color: #181127" href="https://www.traveldoc.aero/">https://www.traveldoc.aero/</a>.
+          <br />
+          Urgent request outside office hours: contact our Rescue Line (24/7 emergency line, paid service):<br />
+          <a style="color: #181127" target="_blank" href="https://afterhours.travel/trf/VQJ6X3"
+            >https://afterhours.travel/trf/VQJ6X3</a
+          >
+          – <a style="color: #181127" href="tel:+441344283493">+44 1344283493</a> –
+          <a style="color: #181127" href="mailto:triton@afterhours.travel">triton@afterhours.travel</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <!-- Globalstar Footer -->
-<table cellpadding="0" cellspacing="0"
-  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-  <tbody>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-          <tbody>
-            <tr>
-              <td style="vertical-align: middle">
-                <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
-                  <span id="footer-naam-globalstar"></span>
-                </h3>
-                <p color="#000000" font-size="medium"
-                  style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px">
-                  <span id="footer-functie-globalstar"></span>
-                </p>
-              </td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td color="#F2547D" direction="vertical" width="1"
-                style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"></td>
-              <td width="15">
-                <div style="width: 15px"></div>
-              </td>
-              <td style="vertical-align: middle">
-                <table cellpadding="0" cellspacing="0"
-                  style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                  <tbody>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px; color: #181127">
-                        <a id="link-gsm-globalstar" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-gsm-globalstar"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a id="link-email-globalstar" href="" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span
-                            id="footer-email-globalstar"></span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <a href="https://www.tritontravel.be" color="#000000" class="sc-gipzik iyhjGb"
-                          style="text-decoration: none; color: #181127; font-size: 12px"><span>www.tritontravel.be</span></a>
-                      </td>
-                    </tr>
-                    <tr height="25" style="vertical-align: middle">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom">
-                                <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"><img
-                                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
-                                    color="#F2547D" width="18" style="display: block" /></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-1-globalstar" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr id="footer-locatie-2-container-globalstar" height="25"
-                      style="vertical-align: middle; display: none">
-                      <td width="30" style="vertical-align: middle">
-                        <table cellpadding="0" cellspacing="0"
-                          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI">
-                          <tbody>
-                            <tr>
-                              <td style="vertical-align: bottom"></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="padding: 0px">
-                        <span>
-                          <span id="footer-locatie-2-globalstar" style="font-size: 12px; color: #181127"> </span>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0" style="
-            vertical-align: -webkit-baseline-middle;
-            font-size: medium;
-            font-family: Segoe UI;
-            width: 100%;
-            margin-top: 5px;
-          ">
-          <tbody>
-            <tr>
-              <td>
-                <a href="https://www.tritontravel.be" target="_blank">
-                  <img src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
-                    alt="Triton Travel" width="150px" />
-                </a>
-              </td>
-              <td style="text-align: right; vertical-align: top">
-
-                <a href="https://globalstartravel.com/" target="_blank">
-                  <img
-                    src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globalstar_logo.png"
-                    alt="Globalstar" width="150px" />
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <table cellpadding="0" cellspacing="0"
-          style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%">
-          <tbody>
-            <tr>
-              <td height="5"></td>
-            </tr>
-            <tr>
-              <td color="#F2547D" direction="horizontal" height="1"
-                style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"></td>
-            </tr>
-            <tr>
-              <td height="5"></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="signature-wrapper" id="signature-globalstar">
+  <button type="button" class="copy-signature-btn" onclick="copySignature('signature-globalstar')">
+    Copy signature
+  </button>
+  <table
+    cellpadding="0"
+    cellspacing="0"
+    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+          >
+            <tbody>
+              <tr>
+                <td style="vertical-align: middle">
+                  <h3 color="#000000" style="margin: 0px; font-size: 17px; font-weight: 500; color: #181127">
+                    <span id="footer-naam-globalstar"></span>
+                  </h3>
+                  <p
+                    color="#000000"
+                    font-size="medium"
+                    style="margin: 0px; color: #181127; font-size: 12px; line-height: 22px"
+                  >
+                    <span id="footer-functie-globalstar"></span>
+                  </p>
+                </td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td
+                  color="#F2547D"
+                  direction="vertical"
+                  width="1"
+                  style="width: 1px; border-bottom: none; border-left: 1px solid #03c239"
+                ></td>
+                <td width="15">
+                  <div style="width: 15px"></div>
+                </td>
+                <td style="vertical-align: middle">
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                  >
+                    <tbody>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/phone.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px; color: #181127">
+                          <a
+                            id="link-gsm-globalstar"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-gsm-globalstar"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/email.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            id="link-email-globalstar"
+                            href=""
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span id="footer-email-globalstar"></span
+                          ></a>
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globe.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <a
+                            href="https://www.tritontravel.be"
+                            color="#000000"
+                            class="sc-gipzik iyhjGb"
+                            style="text-decoration: none; color: #181127; font-size: 12px"
+                            ><span>www.tritontravel.be</span></a
+                          >
+                        </td>
+                      </tr>
+                      <tr height="25" style="vertical-align: middle">
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom">
+                                  <span color="#F2547D" width="18" class="sc-jlyJG bbyJzT" style="display: block"
+                                    ><img
+                                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/company.png"
+                                      color="#F2547D"
+                                      width="18"
+                                      style="display: block"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-1-globalstar" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        id="footer-locatie-2-container-globalstar"
+                        height="25"
+                        style="vertical-align: middle; display: none"
+                      >
+                        <td width="30" style="vertical-align: middle">
+                          <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI"
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="vertical-align: bottom"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="padding: 0px">
+                          <span>
+                            <span id="footer-locatie-2-globalstar" style="font-size: 12px; color: #181127"> </span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              vertical-align: -webkit-baseline-middle;
+              font-size: medium;
+              font-family: Segoe UI;
+              width: 100%;
+              margin-top: 5px;
+            "
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <a href="https://www.tritontravel.be" target="_blank">
+                    <img
+                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/logo.png"
+                      alt="Triton Travel"
+                      width="150px"
+                    />
+                  </a>
+                </td>
+                <td style="text-align: right; vertical-align: top">
+                  <a href="https://globalstartravel.com/" target="_blank">
+                    <img
+                      src="https://raw.githubusercontent.com/upshiftbe/triton-travel-email-signature/main/globalstar_logo.png"
+                      alt="Globalstar"
+                      width="150px"
+                    />
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            style="vertical-align: -webkit-baseline-middle; font-size: medium; font-family: Segoe UI; width: 100%"
+          >
+            <tbody>
+              <tr>
+                <td height="5"></td>
+              </tr>
+              <tr>
+                <td
+                  color="#F2547D"
+                  direction="horizontal"
+                  height="1"
+                  style="width: 100%; border-bottom: 1px solid #03c239; border-left: none; display: block"
+                ></td>
+              </tr>
+              <tr>
+                <td height="5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
